@@ -9,8 +9,8 @@ const SetupView = ({ onLogin, error, loading }) => {
   const [showRefreshToken, setShowRefreshToken] = useState(false);
   const [showSecurityInfo, setShowSecurityInfo] = useState(false);
 
-  const handleSubmit = async () => {
-    await onLogin(apiKey, refreshToken, false);
+  const handleSubmit = () => {
+    onLogin(apiKey, refreshToken, false);
   };
 
   const handleDemoMode = () => {
@@ -18,33 +18,33 @@ const SetupView = ({ onLogin, error, loading }) => {
   };
 
   return (
-    <div className="min-h-screen bg-atomberg-black flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-950 flex items-center justify-center p-4">
       {showSecurityInfo && (
         <SecurityWarning onClose={() => setShowSecurityInfo(false)} />
       )}
       
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md animate-fade-in">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-24 h-24 bg-gradient-to-br from-atomberg-yellow to-atomberg-gold rounded-3xl mb-6 card-shadow glow-yellow">
-            <Wind className="w-14 h-14 text-atomberg-black" strokeWidth={2.5} />
+        <div className="text-center mb-6">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-yellow-500 to-orange-500 rounded-3xl mb-4 shadow-lg shadow-yellow-500/30 animate-float">
+            <Wind className="w-11 h-11 text-black" strokeWidth={2.5} />
           </div>
-          <h1 className="text-5xl font-extrabold text-white mb-3 text-shadow">
+          <h1 className="text-4xl font-extrabold text-white mb-2">
             Atomberg
           </h1>
-          <div className="flex items-center justify-center gap-2 text-atomberg-yellow">
-            <Sparkles className="w-5 h-5" />
-            <p className="text-xl font-semibold">Smart Fan Controller</p>
-            <Sparkles className="w-5 h-5" />
+          <div className="flex items-center justify-center gap-2 text-yellow-500">
+            <Sparkles className="w-4 h-4" />
+            <p className="text-lg font-semibold">Smart Fan Controller</p>
+            <Sparkles className="w-4 h-4" />
           </div>
         </div>
 
         {/* Main Card */}
-        <div className="bg-atomberg-darkGray border-2 border-atomberg-yellow/20 rounded-2xl shadow-2xl p-8 card-shadow">
-          <div className="space-y-6">
+        <div className="bg-gray-900 border-2 border-gray-800 rounded-2xl shadow-2xl p-6 animate-slide-up">
+          <div className="space-y-5">
             {/* API Key Input */}
             <div>
-              <label className="block text-sm font-bold text-atomberg-yellow mb-3">
+              <label className="block text-sm font-bold text-yellow-500 mb-2">
                 API Key
               </label>
               <div className="relative">
@@ -52,13 +52,13 @@ const SetupView = ({ onLogin, error, loading }) => {
                   type={showApiKey ? 'text' : 'password'}
                   value={apiKey}
                   onChange={(e) => setApiKey(e.target.value)}
-                  className="w-full px-4 py-3.5 pr-12 rounded-lg bg-atomberg-black border-2 border-gray-700 text-white placeholder-gray-500 focus:border-atomberg-yellow focus:ring-2 focus:ring-atomberg-yellow/20 outline-none transition"
+                  className="w-full px-4 py-3 pr-11 rounded-xl bg-gray-950 border-2 border-gray-800 text-white placeholder-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/20 outline-none transition-all"
                   placeholder="Enter your API key"
                 />
                 <button
                   type="button"
                   onClick={() => setShowApiKey(!showApiKey)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-atomberg-yellow transition"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-yellow-500 transition-colors"
                 >
                   {showApiKey ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -67,7 +67,7 @@ const SetupView = ({ onLogin, error, loading }) => {
 
             {/* Refresh Token Input */}
             <div>
-              <label className="block text-sm font-bold text-atomberg-yellow mb-3">
+              <label className="block text-sm font-bold text-yellow-500 mb-2">
                 Refresh Token
               </label>
               <div className="relative">
@@ -75,13 +75,13 @@ const SetupView = ({ onLogin, error, loading }) => {
                   type={showRefreshToken ? 'text' : 'password'}
                   value={refreshToken}
                   onChange={(e) => setRefreshToken(e.target.value)}
-                  className="w-full px-4 py-3.5 pr-12 rounded-lg bg-atomberg-black border-2 border-gray-700 text-white placeholder-gray-500 focus:border-atomberg-yellow focus:ring-2 focus:ring-atomberg-yellow/20 outline-none transition"
+                  className="w-full px-4 py-3 pr-11 rounded-xl bg-gray-950 border-2 border-gray-800 text-white placeholder-gray-600 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/20 outline-none transition-all"
                   placeholder="Enter your refresh token"
                 />
                 <button
                   type="button"
                   onClick={() => setShowRefreshToken(!showRefreshToken)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-atomberg-yellow transition"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-yellow-500 transition-colors"
                 >
                   {showRefreshToken ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
@@ -92,7 +92,7 @@ const SetupView = ({ onLogin, error, loading }) => {
             <button
               type="button"
               onClick={() => setShowSecurityInfo(true)}
-              className="w-full flex items-center justify-center gap-2 text-sm text-gray-400 hover:text-atomberg-yellow transition"
+              className="w-full flex items-center justify-center gap-2 text-sm text-gray-500 hover:text-yellow-500 transition-colors py-2"
             >
               <Lock className="w-4 h-4" />
               <span>How we protect your credentials</span>
@@ -100,7 +100,7 @@ const SetupView = ({ onLogin, error, loading }) => {
 
             {/* Error Message */}
             {error && (
-              <div className="bg-red-500/10 border-2 border-red-500/50 rounded-lg p-4 flex items-start gap-3">
+              <div className="bg-red-500/10 border-2 border-red-500/50 rounded-xl p-3 flex items-start gap-2 animate-shake">
                 <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
                 <p className="text-sm text-red-400 font-medium">{error}</p>
               </div>
@@ -110,7 +110,7 @@ const SetupView = ({ onLogin, error, loading }) => {
             <button
               onClick={handleSubmit}
               disabled={loading || !apiKey || !refreshToken}
-              className="w-full bg-gradient-to-r from-atomberg-yellow to-atomberg-gold text-atomberg-black py-4 rounded-lg font-bold text-lg hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 glow-yellow"
+              className="w-full bg-gradient-to-r from-yellow-500 to-orange-500 text-black py-3.5 rounded-xl font-bold text-base hover:shadow-lg hover:shadow-yellow-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:shadow-none"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -124,22 +124,22 @@ const SetupView = ({ onLogin, error, loading }) => {
           </div>
 
           {/* Demo Mode Section */}
-          <div className="mt-8 pt-8 border-t-2 border-gray-700">
+          <div className="mt-6 pt-6 border-t-2 border-gray-800">
             <button
               onClick={handleDemoMode}
-              className="w-full bg-atomberg-black border-2 border-atomberg-yellow/50 text-atomberg-yellow py-3.5 rounded-lg font-bold hover:bg-atomberg-yellow/10 hover:border-atomberg-yellow transition-all"
+              className="w-full bg-gray-950 border-2 border-yellow-500/50 text-yellow-500 py-3 rounded-xl font-bold hover:bg-yellow-500/10 hover:border-yellow-500 transition-all"
             >
               Try Demo Mode
             </button>
-            <p className="text-xs text-gray-500 mt-4 text-center leading-relaxed">
+            <p className="text-xs text-gray-600 mt-3 text-center leading-relaxed">
               Demo mode lets you explore all features without connecting to real devices. Perfect for testing!
             </p>
           </div>
 
           {/* Help Text */}
-          <div className="mt-6 p-4 bg-atomberg-yellow/5 border border-atomberg-yellow/20 rounded-lg">
-            <p className="text-xs text-gray-400 leading-relaxed">
-              <span className="text-atomberg-yellow font-bold">Need credentials?</span> Open the Atomberg Home app, go to Settings → Developer Options, and enable Developer Mode to generate your API key and refresh token.
+          <div className="mt-4 p-3 bg-yellow-500/5 border border-yellow-500/20 rounded-xl">
+            <p className="text-xs text-gray-500 leading-relaxed">
+              <span className="text-yellow-500 font-bold">Need credentials?</span> Open the Atomberg Home app, go to Settings → Developer Options, and enable Developer Mode to generate your API key and refresh token.
             </p>
           </div>
         </div>

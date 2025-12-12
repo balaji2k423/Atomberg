@@ -7,26 +7,15 @@ import api from './services/api';
 
 const App = () => {
   const [view, setView] = useState('setup');
-  const [credentials, setCredentials] = useState(null);
   const [selectedDevice, setSelectedDevice] = useState(null);
   const [demoMode, setDemoMode] = useState(false);
-  
-  const { devices, loading, error, setDevices, setError, fetchDevices, sendCommand } = useDevices();
+  const [devices, setDevices] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
 
-  // Check for stored credentials on mount
-  useEffect(() => {
-    const stored = api.getStoredCredentials();
-    if (stored && stored.accessToken) {
-      setCredentials(stored);
-      setView('devices');
-      fetchDevices(stored.apiKey, stored.accessToken);
-    }
-  }, [fetchDevices]);
-
-  const handleLogin = async (apiKey, refreshToken, isDemoMode = false) => {
+  const handleLogin = (apiKey, refreshToken, isDemoMode = false) => {
     if (isDemoMode) {
       setDemoMode(true);
-      setCredentials({ apiKey: 'demo', refreshToken: 'demo', accessToken: 'demo' });
       setDevices([
         {
           device_id: 'demo001',
@@ -60,30 +49,19 @@ const App = () => {
       setView('devices');
       return true;
     }
-
-    try {
-      const accessToken = await api.getAccessToken(apiKey, refreshToken);
-      const creds = { apiKey, refreshToken, accessToken };
-      setCredentials(creds);
-      await fetchDevices(apiKey, accessToken);
-      setView('devices');
-      return true;
-    } catch (err) {
-      setError(err.message);
-      return false;
-    }
+    
+    setError('API integration requires actual credentials');
+    return false;
   };
 
   const handleLogout = () => {
-    api.clearCredentials();
-    setCredentials(null);
     setDevices([]);
     setSelectedDevice(null);
     setDemoMode(false);
     setView('setup');
   };
 
-  const handleSendCommand = async (deviceId, command) => {
+  const handleSendCommand = (deviceId, command) => {
     if (demoMode) {
       setDevices(prev => prev.map(d => {
         if (d.device_id === deviceId) {
@@ -115,8 +93,6 @@ const App = () => {
       }
       return true;
     }
-
-    return await sendCommand(credentials.apiKey, credentials.accessToken, deviceId, command);
   };
 
   if (view === 'setup') {
@@ -157,3 +133,97 @@ const App = () => {
 };
 
 export default App;
+
+<style>{`
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slide-up {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scale-in {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes shake {
+    0%, 100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    75% {
+      transform: translateX(5px);
+    }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fade-in 0.5s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slide-up 0.5s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scale-in 0.3s ease-out forwards;
+  }
+
+  .animate-shake {
+    animation: shake 0.5s ease-in-out;
+  }
+
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #eab308;
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+  }
+
+  input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #eab308;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 10px rgba(234, 179, 8, 0.5);
+  }
+`}</style>
