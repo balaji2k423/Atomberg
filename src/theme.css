@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+@theme {
+  --color-atomberg-black: #1a1a1a;
+  --color-atomberg-darkGray: #2d2d2d;
+  --color-atomberg-yellow: #FFD700;
+  --color-atomberg-gold: #FFA500;
+}
